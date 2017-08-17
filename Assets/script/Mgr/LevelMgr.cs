@@ -20,21 +20,24 @@ public class LevelMgr : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () { 
-        winLevel = true;
-		foreach (BaseCondition cd in levelConditions)
-		{
-			if (cd.completed == false)
-			{                
-				winLevel = false;
-				break;
-			}
-		}
-		if (winLevel)
-		{
-            Debug.Log("Set Win");
-			StateMgr.instance.State = GameState.WON_LEVEL;
-		}
+	void Update () {
+        if (StateMgr.instance.State != GameState.WON_LEVEL)
+        {
+            winLevel = true;
+            foreach (BaseCondition cd in levelConditions)
+            {
+                if (cd.completed == false)
+                {
+                    winLevel = false;
+                    break;
+                }
+            }
+            if (winLevel)
+            {
+                Debug.Log("Set Win");
+                StateMgr.instance.State = GameState.WON_LEVEL;
+            }
+        }
 	}
     public void OnChangeState() {
         gameState = StateMgr.instance.State;

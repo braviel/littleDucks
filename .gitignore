@@ -1,3 +1,9 @@
 Assets/*.meta
 *.meta
+build/
+Library/AtlasCache/
+Library/metadata/
+Library/ShaderCache/
+Library/*.log
+Temp/
 

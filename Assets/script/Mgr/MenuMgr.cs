@@ -69,6 +69,7 @@ public class MenuMgr : MonoBehaviour {
 				}
 			case GameState.PAUSING:
 				{
+                    ActiveOnlyPanel("IGM");
 					break;
 				}
 			case GameState.PLAYING:
@@ -83,32 +84,14 @@ public class MenuMgr : MonoBehaviour {
                 }
 			case GameState.WON_LEVEL:
 				{
-					ActiveOnlyPanel("WinLevel");
+					ActiveOnlyPanel("Congratz");
 					break;
 				}
-
+            case GameState.RESET: 
+                {
+                    HidePanelName("winLevel");
+                    break;
+                }
 		}
-    }
-	public void onPauseClicked(Button sender) {
-		Debug.Log ("Start button clicked");
-		Text btnText = sender.GetComponentInChildren<Text> ();
-
-		if (gameState == GameState.PLAYING) {
-            StateMgr.instance.State = GameState.PAUSING;
-			//btnText.text = "Resume";
-		} else if(gameState == GameState.PAUSING){
-            StateMgr.instance.State = GameState.PLAYING;
-            //btnText.text = "Pause";
-		}
-	}
-	public void onRetryClicked(Button sender) {
-        HidePanelName("winLevel");
-        StateMgr.instance.State = GameState.RESET;
-	}
-    public void onNextClicked(Button sender)
-    {
-        HidePanelName("winLevel");
-
-        StateMgr.instance.State = GameState.BEGIN_LEVEL;
     }
 }
