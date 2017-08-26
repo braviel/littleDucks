@@ -18,7 +18,7 @@ public class IntroPanel : Panel {
         float delta = (currTime - begin) / timeout;
         Debug.Log("Delta normalized: " + delta);
         yield return new WaitForSeconds(timeout);
-        StateMgr.instance.State = GameState.LOBBY;
+		stateMgr.State = GameState.LOBBY;
         Debug.Log("End!");
     }
 	// Update is called once per frame

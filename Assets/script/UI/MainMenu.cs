@@ -18,6 +18,10 @@ public class MainMenu : Panel {
 	public void OnStartBtnClicked(Button sender)
 	{
         Debug.Log("Start Btn clicked");
-        StateMgr.instance.State = GameState.LEVEL_CHOSE;
+        stateMgr.State = GameState.LEVEL_CHOSE;
+	}
+
+	public void OnTopScoreBtnClicked() {
+		stateMgr.State = GameState.TOP_SCORE;
 	}
 }

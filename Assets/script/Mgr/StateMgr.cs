@@ -6,6 +6,7 @@ public enum GameState {
 	INTRO,
     LOBBY,
     LEVEL_CHOSE,
+	TOP_SCORE,
     BEGIN_LEVEL,
 	PLAYING,
 	PAUSING,
@@ -15,7 +16,8 @@ public enum GameState {
 	RESET
 }
 public class StateMgr : MonoBehaviour {
-    public static StateMgr instance = null;
+	
+//    public static StateMgr instance = null;
     public MenuMgr menuMgr;
     public LevelMgr levelMgr;
 
@@ -33,11 +35,11 @@ public class StateMgr : MonoBehaviour {
     }
     void Awake()
     {
-        if(instance == null) {
-            instance = this;
-        } else if(instance != this) {
-            Destroy(gameObject);  
-        }
+//        if(instance == null) {
+//            instance = this;
+//        } else if(instance != this) {
+//            Destroy(gameObject);  
+//        }
         DontDestroyOnLoad(gameObject);
         Init();
     }

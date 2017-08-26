@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class LevelChoser : Panel {
+public class TopScrorePanel : Panel {
 
 	// Use this for initialization
 	void Start () {
@@ -14,8 +13,7 @@ public class LevelChoser : Panel {
 	void Update () {
 		
 	}
-
-    public void OnLevelClicked(int level) {
-		stateMgr.GoToLevel(level);
-    }
+	public void OnMenuBtnClicked() {
+		stateMgr.State = GameState.LOBBY;
+	}
 }

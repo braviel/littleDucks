@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelMgr : MonoBehaviour {
-	public Transform playerSpawner;
+	public StateMgr stateMgr;
+	public QuackSpawner spawnerPrefab;
+//	public Transform playerSpawner;
     public Transform levelGoal;
-	public GameObject playerPref;
+//	public GameObject playerPref;
     public List<GameObject> lvlPrefabs;
 	public List<BaseCondition> levelConditions;
     public static int currentLevel = 0;
-    private GameObject player;
+//    private GameObject player;
+	private QuackSpawner spawner;
     private GameObject level;
     private GameState gameState;
 	bool winLevel = false;
 	// Use this for initialization
     void Awake () {
         //Debug.Log("State " + gameState);
-        levelGoal.gameObject.SetActive(false);
+        
     }
-	
+	void Init() {
+		levelGoal.gameObject.SetActive(false);
+	}
 	// Update is called once per frame
 	void Update () {
-        if (StateMgr.instance.State != GameState.WON_LEVEL)
+		if (stateMgr && stateMgr.State != GameState.WON_LEVEL)
         {
             winLevel = true;
             foreach (BaseCondition cd in levelConditions)
@@ -35,12 +40,12 @@ public class LevelMgr : MonoBehaviour {
             if (winLevel)
             {
                 Debug.Log("Set Win");
-                StateMgr.instance.State = GameState.WON_LEVEL;
+				stateMgr.State = GameState.WON_LEVEL;
             }
         }
 	}
     public void OnChangeState() {
-        gameState = StateMgr.instance.State;
+		gameState = stateMgr.State;
         switch(gameState) {
             case GameState.BEGIN_LEVEL:
                 {
@@ -49,7 +54,7 @@ public class LevelMgr : MonoBehaviour {
                 }
             case GameState.RESET: 
                 {
-                    StateMgr.instance.State = GameState.BEGIN_LEVEL;
+					stateMgr.State = GameState.BEGIN_LEVEL;
                     return;
                 }
             case GameState.LEVEL_CHOSE:
@@ -92,13 +97,10 @@ public class LevelMgr : MonoBehaviour {
 	}
 	public void StartingLevel()
 	{
-        if(player) {
-            Destroy(player.gameObject);
-        }
-        player = (GameObject)Instantiate(playerPref, playerSpawner.position, playerSpawner.rotation);
-        if(level) {
-            Destroy(level);
-        }
+
+		if(level) {
+			Destroy(level);
+		}
         Debug.Log("Starting level: " + currentLevel);
         level = Instantiate(lvlPrefabs[currentLevel], transform.position, transform.rotation);
         level.transform.parent = transform;
@@ -106,8 +108,24 @@ public class LevelMgr : MonoBehaviour {
 		{
 			cd.completed = false;
 		}
-		Debug.Log("Player pos: " + player.transform.position);
-        StateMgr.instance.State = GameState.PLAYING;
+		//		spawnerPrefab
+		if(spawner) {
+			Debug.Log ("Destroy old spawner");
+			Destroy(spawner.gameObject);
+		}
+		foreach(Transform t in level.transform) {
+//			Debug.Log ("Traverse object: [ " + t.gameObject.name + " ]");
+			if (t.gameObject.name == "obj") {
+				foreach (Transform g in t) {
+					if (g.gameObject.tag == "spawner") {
+						spawner = Instantiate (spawnerPrefab, g.position, g.rotation) as QuackSpawner;
+					}
+				}
+			}
+
+		}
+//		Debug.Log("Player pos: " + player.transform.position);
+		stateMgr.State = GameState.PLAYING;
         levelGoal.gameObject.SetActive(true);
 	}
 

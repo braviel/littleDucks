@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class LevelChoser : Panel {
+public class IGM : Panel {
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +14,12 @@ public class LevelChoser : Panel {
 		
 	}
 
-    public void OnLevelClicked(int level) {
-		stateMgr.GoToLevel(level);
+    public void MainMenuBtnClicked() {
+		stateMgr.State = GameState.LOBBY;
     }
+
+	public void ResumeBtnClicked()
+	{
+		stateMgr.State = GameState.PLAYING;
+	}
 }

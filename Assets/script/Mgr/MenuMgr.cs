@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuMgr : MonoBehaviour {
+	public StateMgr stateMgr;
     public List<Panel> panelList;
 	private GameState gameState;
 
@@ -48,7 +49,7 @@ public class MenuMgr : MonoBehaviour {
         		
 	}
     public void OnChageState() {
-        gameState = StateMgr.instance.State;
+		gameState = stateMgr.State;
         Debug.Log("ON State Change " + gameState.ToString());
 		switch (gameState)
 		{
@@ -62,6 +63,11 @@ public class MenuMgr : MonoBehaviour {
 					ActiveOnlyPanel("MainMenu");
 					break;
 				}
+			case GameState.TOP_SCORE:
+			{
+				ActiveOnlyPanel("TopScore");
+				break;
+			}
             case GameState.LEVEL_CHOSE:
 				{
                     ActiveOnlyPanel("LevelChoser");
